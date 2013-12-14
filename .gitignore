@@ -10,7 +10,6 @@
 .bash_history
 .vagrant.d
 .vegas
-.vim
 .cache
 .viminfo
 .chef
