@@ -10,6 +10,11 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'thoughtbot/vim-rspec'
+
 noremap   <Up>    ""
 noremap!  <Up>    <Esc>
 noremap   <Down>  ""
