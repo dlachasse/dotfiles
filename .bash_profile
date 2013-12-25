@@ -8,6 +8,7 @@ alias gcb='git checkout -b'
 alias hack='hack.sh'
 alias ship='ship.sh'
 alias dwf='dwf.sh'
+alias md='md.sh'
 alias migrate='rake db:migrate && rake db:test:prepare'
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 chflags nohidden ~/Library/
