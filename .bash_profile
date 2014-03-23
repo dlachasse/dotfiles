@@ -1,6 +1,7 @@
 export PATH=$PATH:$HOME/bin:/usr/local/bin/npm
 export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export EDITOR=/Applications/Sublime\ Text.app
 
 alias gcb='git checkout -b'
 alias hack='hack.sh'
@@ -8,6 +9,7 @@ alias ship='ship.sh'
 alias dwf='dwf.sh'
 alias md='md.sh'
 alias bi='bundle install'
+alias bfg='java -jar bfg.jar'
 alias migrate='rake db:migrate && rake db:test:prepare'
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 chflags nohidden ~/Library/
@@ -45,7 +47,7 @@ alias sudo='sudo '
 # You must install Pygments first - "sudo easy_install Pygments"
 alias c='pygmentize -O style=monokai -f console256 -g'
 
-# Git 
+# Git
 # You must install Git first - ""
 alias gs='git status'
 alias ga='git add .'
@@ -53,7 +55,7 @@ alias gc='git commit -m' # requires you to type a commit message
 alias gp='git push'
 
 
-### Prompt Colors 
+### Prompt Colors
 # Sexy Solarized Bash Prompt, inspired by "Extravagant Zsh Prompt"
 # Screenshot: http://img.gf3.ca/d54942f474256ec26a49893681c49b5a.png
 
@@ -123,5 +125,5 @@ PS1="\[${BOLD}${CYAN}\]\u \[$BASE0\]in \[$BLUE\]\w\[$BASE0\]\$([[ -n \$(git bran
 
 ### Misc
 
-# Only show the current directory's name in the tab 
+# Only show the current directory's name in the tab
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
