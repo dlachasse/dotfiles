@@ -1,5 +1,4 @@
 export PATH=$PATH:$HOME/bin:/usr/local/bin/npm
-export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 export EDITOR=/Applications/Sublime\ Text.app
 
@@ -9,7 +8,6 @@ alias ship='ship.sh'
 alias dwf='dwf.sh'
 alias md='md.sh'
 alias bi='bundle install'
-alias bfg='java -jar bfg.jar'
 alias migrate='rake db:migrate && rake db:test:prepare'
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function
 chflags nohidden ~/Library/
@@ -127,3 +125,127 @@ PS1="\[${BOLD}${CYAN}\]\u \[$BASE0\]in \[$BLUE\]\w\[$BASE0\]\$([[ -n \$(git bran
 
 # Only show the current directory's name in the tab
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
+
+# Get system data
+ARCH=$(uname -m | sed 's/x86_//;s/i[3-6]86/32/')
+
+if [ -f /etc/lsb-release ]; then
+    . /etc/lsb-release
+    OS=$DISTRIB_ID
+    VER=$DISTRIB_RELEASE
+elif [ -f /etc/debian_version ]; then
+    OS=ubuntu  # XXX or Ubuntu??
+    VER=$(cat /etc/debian_version)
+elif [ -f /etc/yum.conf ]; then
+    OS=centos
+    VER=crappy-version
+else
+    OS=$(uname -s)
+    VER=$(uname -r)
+fi
+
+case $(uname -m) in
+x86_64)
+    BITS=64
+    ;;
+i*86)
+    BITS=32
+    ;;
+*)
+    BITS=?
+    ;;
+esac
+
+# config
+export EDITOR='vim' #default
+
+## file
+alias purgedir="rm -rf .* *"
+alias purgeswap="rm -rf ~/.vim/swapfiles"
+alias home="cd ~"
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+## remote
+alias list="screen -list"
+alias web="cd /var/www/html"
+
+# git
+alias gp="git pull origin $1"
+alias gcm="git commit -a -m $1"
+alias gbl="git branch --list"
+function gcr() {
+  echo "git checkout -b $1 origin/$1";
+  echo `git checkout -b $1 origin/$1`;
+}
+
+## compression
+alias untar="tar -xvf $1"
+
+#** SERVER **#
+    if [[ $OS == 'centos' ]]; then
+        ## apache
+        alias serverconf="sudo vim /etc/httpd/conf/httpd.conf"
+        alias sslconf="sudo vim /etc/httpd/conf.d/ssl.conf"
+
+        alias serverrestart="sudo /sbin/service httpd restart"
+        alias serverstop="sudo /sbin/service httpd stop"
+        alias serverstart="sudo /sbin/service httpd start"
+
+        #php
+        alias phpini="sudo vim /etc/php.ini"
+
+    elif [[ $OS == 'Darwin' ]]; then
+        ## osx only
+        alias showhidden="defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder"
+        alias hidehidden="defaults write com.apple.finder AppleShowAllFiles -boolean false ; killall Finder"
+        alias dsoff="defaults write com.apple.desktopservices DSDontWriteNetworkStores true"
+        alias dson="defaults write com.apple.desktopservices DSDontWriteNetworkStores false"
+
+        #set sublime to default editor. gen symlink for executing via cmd line
+        if [ "$EDITOR" != 'sublime' ]; then export EDITOR='sublime'; fi;
+        if [[ ! -f //usr/local/bin/sublime ]]; then
+          echo `ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime`
+        fi
+    elif [[ $OS == 'ubuntu' ]]; then
+        alias serverconf="sudo vim /etc/apache2/sites-enabled/000-default"
+        alias siteconf="sudo vim /etc/apache2/envvars"
+
+        alias serverrestart="sudo /etc/init.d/apache2 restart"
+        alias serverstop="sudo /etc/init.d/apache2 stop"
+        alias serverstart="sudo /etc/init.d/apache2 start"
+
+        #php
+        alias phpini="sudo vim /etc/php5/apache2/php.ini"
+    fi
+
+alias vimrc="vim ~/.vimrc"
+alias aliases="$EDITOR ~/.aliases.sh"
+alias ualiases="(cd ~;git add ~/.aliases.sh; git commit -m 'aliases updated';git push origin master;)"
+
+## git
+clonehere () {
+    git init | git remote add origin $1 | git pull origin
+}
+
+## screen
+# kill detached
+killd () {
+    screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
+}
+# kill all
+killa () {
+    screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
+    screen -ls | grep tached | cut -d. -f1 | awk '{print $1}' | xargs kill
+}
+
+# Get weird
+echo "CHA-CHING! Deez is runnin' $OS $VER $BITS-bit"
