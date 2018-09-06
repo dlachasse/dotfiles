@@ -1,66 +1,59 @@
-execute pathogen#infect()
-syntax on
-syntax enable
-set background=dark
-colorscheme solarized
-set nu
+" Pathogen
+execute pathogen#infect('bundle/{}')
 filetype plugin indent on
-let g:neocomplcache_enable_at_startup = 1
-set tabstop=2
-set shiftwidth=2
-set expandtab
+autocmd FileType ruby compiler ruby
+autocmd BufWritePre * StripWhitespace
+autocmd FileType ruby setlocal commentstring=#\ %s
+syntax enable
+colorscheme solarized
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set tabstop=2 shiftwidth=2 expandtab
+set wrap linebreak nolist
+set formatoptions-=t
+set textwidth=100
+set colorcolumn=+1
+set so=999
+set number
+set rnu
+set ttyfast
+set backupdir=~/.vim/_tmp
+set directory=~/.vim/_tmp
+set undodir=~/.vim-undo
+set undofile
+set undolevels=1000 "max number of changes that can be undone
+set undoreload=10000 "max number lines to save for undo on buffer reload
+set clipboard+=unnamed
+set pastetoggle=<leader>p
 
-Bundle 'thoughtbot/vim-rspec'
+let mapleader=" "
+let g:netrw_liststyle = 3
 
-noremap   <Up>    ""
-noremap!  <Up>    <Esc>
-noremap   <Down>  ""
-noremap   <Down>  <Esc>
-noremap!  <Left>  ""
-noremap   <Left>  <Esc>
-noremap   <Right> ""
-noremap!  <Right> <Esc>
+imap jj <Esc>
 
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap { {<CR>}<Esc>O
-autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap } <c-r>=CloseBracket()<CR>
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
+nnoremap <silent><leader>q :q<cr>
+nnoremap <silent><leader>wq :wq<cr>
+nnoremap <silent> <S-t> :tabnew %<CR>
+nnoremap <Leader>e :Explore<CR>
+nnoremap <Leader>d :call delete(expand('%')) \| bdelete!<CR>
 
-function ClosePair(char)
- if getline('.')[col('.') - 1] == a:char
- return "\<Right>"
- else
- return a:char
- endif
-endf
+" FZF
+set rtp+=/usr/local/opt/fzf
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+nnoremap <c-p> :FZF<cr>
 
-function CloseBracket()
- if match(getline(line('.') + 1), '\s*}') < 0
- return "\<CR>}"
- else
- return "\<Esc>j0f}a"
- endif
-endf
+" Rubocop
+nmap <Leader>rc :RuboCop<CR>
 
-function QuoteDelim(char)
- let line = getline('.')
- let col = col('.')
- if line[col - 2] == "\\"
- "Inserting a quoted quotation mark into the string
- return a:char
- elseif line[col - 1] == a:char
- "Escaping out of the string
- return "\<Right>"
- else
- "Starting a string
- return a:char.a:char."\<Esc>i"
- endif
-endf
+" Silver Surfer
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  nnoremap \ :Ag<SPACE>
+endif
+
+" Rspec.vim
+let g:rspec_runner = "os_x_iterm"
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
