@@ -1,12 +1,10 @@
 " Pathogen
 execute pathogen#infect('bundle/{}')
 filetype plugin indent on
-autocmd FileType ruby compiler ruby
-autocmd BufWritePre * StripWhitespace
-autocmd FileType ruby setlocal commentstring=#\ %s
 syntax enable
 colorscheme solarized
 
+set nocompatible
 set tabstop=2 shiftwidth=2 expandtab
 set wrap linebreak nolist
 set formatoptions-=t
@@ -14,7 +12,6 @@ set textwidth=100
 set colorcolumn=+1
 set so=999
 set number
-set rnu
 set ttyfast
 set backupdir=~/.vim/_tmp
 set directory=~/.vim/_tmp
@@ -33,19 +30,12 @@ imap jj <Esc>
 nnoremap <silent><leader>q :q<cr>
 nnoremap <silent><leader>wq :wq<cr>
 nnoremap <silent> <S-t> :tabnew %<CR>
+nnoremap <silent> <S-tab> :tabn<CR>
 nnoremap <Leader>e :Explore<CR>
-nnoremap <Leader>d :call delete(expand('%')) \| bdelete!<CR>
 
 " FZF
 set rtp+=/usr/local/opt/fzf
-let g:fzf_action = {
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit'
-      \ }
 nnoremap <c-p> :FZF<cr>
-
-" Rubocop
-nmap <Leader>rc :RuboCop<CR>
 
 " Silver Surfer
 if executable('ag')
@@ -53,7 +43,18 @@ if executable('ag')
   nnoremap \ :Ag<SPACE>
 endif
 
-" Rspec.vim
-let g:rspec_runner = "os_x_iterm"
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
+" Ale defaults
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace']
+\ }
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 0
+
+" Airline
+let g:airline#extensions#ale#enabled = 1
+let g:airline_theme='solarized'
+
+" Jenkinsfile syntax highlighting
+au BufNewFile,BufRead Jenkinsfile setf groovy
