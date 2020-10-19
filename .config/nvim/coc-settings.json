@@ -1,0 +1,11 @@
+{
+  "python.formatting.provider": "black",
+  "python.pipenvPath": "/Users/dlachasse/.asdf/shims/pipenv",
+  "python.pythonPath": "/Users/dlachasse/.asdf/shims/python",
+  "python.venvPath": "/Users/dlachasse/.local/share/virtualenvs/",
+  "python.linting.flake8Args": ["--ignore=E302"],
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyPath": "/Users/dlachasse/.asdf/shims/mypy",
+  "python.jediEnabled": true,
+  "python.jediShortcut": "LS"
+}

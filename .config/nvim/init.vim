@@ -1,9 +1,8 @@
-" Pathogen
-execute pathogen#infect('bundle/{}')
 filetype plugin indent on
 syntax enable
 
 set nocompatible
+set rnu
 set tabstop=2 shiftwidth=2 expandtab
 set wrap linebreak nolist
 set formatoptions-=t
@@ -31,6 +30,7 @@ nnoremap <silent><leader>wq :wq<cr>
 nnoremap <silent> <S-t> :tabnew %<CR>
 nnoremap <silent> <S-tab> :tabn<CR>
 nnoremap <Leader>e :Explore<CR>
+nnoremap <Leader>d :Pydocstring<CR>
 
 " FZF
 set rtp+=~/.fzf
@@ -42,6 +42,27 @@ if executable('ag')
   nnoremap \ :Ag<SPACE>
 endif
 
+
+" Jenkinsfile syntax highlighting
+au BufNewFile,BufRead Jenkinsfile setf groovy
+
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'dense-analysis/ale'
+Plug 'altercation/vim-colors-solarized'
+Plug 'juliosueiras/vim-terraform-completion'
+"" Python specific
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+Plug 'ambv/black'
+Plug 'fisadev/vim-isort'
+Plug 'mgedmin/python-imports.vim'
+call plug#end()
+" Run :CocInstall coc-pyright to install pyright
+
+set background=dark
+colorscheme solarized
+
 " Ale defaults
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace']
@@ -50,10 +71,3 @@ let g:ale_fix_on_save = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_enter = 0
-
-" Airline
-let g:airline#extensions#ale#enabled = 1
-let g:airline_theme='solarized'
-
-" Jenkinsfile syntax highlighting
-au BufNewFile,BufRead Jenkinsfile setf groovy
