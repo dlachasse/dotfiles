@@ -1,6 +1,6 @@
 export AIRFLOW_HOME=~/airflow
 export GOPATH=~/Dev/go
-export EDITOR='vim'
+export EDITOR='nvim'
 
 parse_git_dirty () {
   [[ $(git status 2> /dev/null | tail -n1 | cut -c 1-17) != "nothing to commit" ]] && echo "*"
@@ -54,6 +54,12 @@ alias ec2="sh ~/bin/ec2"
 # tmux
 alias tn="tmux new-session -s ${PWD##*/}"
 
+# docker
+alias dba="docker build --build-arg NEXUS_PYPI_USERNAME --build-arg NEXUS_PYPI_PASSWORD . -t pepsico-ecom/airflow:dev"
+
+# pandoc
+alias deck="pandoc --to=revealjs -V revealjs-url=./reveal.js -V theme=white --self-contained --output=$1-$2.html --slide-level 2 weekly_template.md"
+
 # Bash Completion
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 source <(kubectl completion bash)
@@ -68,3 +74,17 @@ export GPG_TTY=$(tty)
 [[ -r "/Users/dlachasse/secrets.sh" ]] && . "/Users/dlachasse/secrets.sh"
 
 eval "$(direnv hook bash)"
+
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home"
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH=/Users/dlachasse/.local/bin:$PATH
+export PYTHONPATH='/usr/local/Cellar/pdm/1.4.5/libexec/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
+if [ -n "$PYTHONPATH" ]; then
+    export PYTHONPATH='/Users/dlachasse/.local/lib/python3.7/site-packages/pdm/pep582':$PYTHONPATH
+else
+    export PYTHONPATH='/Users/dlachasse/.local/lib/python3.7/site-packages/pdm/pep582'
+fi
+for bcfile in ~/.bash_completion.d/* ; do
+  [ -f "$bcfile" ] && . $bcfile
+done
+. /usr/local/opt/asdf/libexec/asdf.sh
