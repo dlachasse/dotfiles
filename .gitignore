@@ -109,3 +109,10 @@ tmux-client-41279.log
 ~.tmux.conf
 .tmux/
 secrets.sh
+Exercism/*
+.config/exercism/
+.config/iterm2/
+.pdfbox.cache
+.scala_history_jline3
+.scalac/
+Creative\ Cloud\ Files/

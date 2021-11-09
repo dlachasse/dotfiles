@@ -63,27 +63,17 @@ alias deck="pandoc --to=revealjs -V revealjs-url=./reveal.js -V theme=white --se
 # Bash Completion
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 source <(kubectl completion bash)
-source /Users/dlachasse/.asdf/installs/rust/1.37.0/env
+source ~/.asdf/installs/rust/1.37.0/env
 
-export PATH=/Users/dlachasse/.asdf/installs/rust/1.37.0/bin:$PATH
-export PATH=/Users/dlachasse/Dev/style/bin:$PATH
-export PATH=/Applications/Postgres.app/Contents/Versions/11/bin:$PATH
+export PATH=~/Dev/style/bin:$PATH
 export GPG_TTY=$(tty)
 
-[[ -r "/Users/dlachasse/bash_completion.sh" ]] && . "/Users/dlachasse/bash_completion.sh"
-[[ -r "/Users/dlachasse/secrets.sh" ]] && . "/Users/dlachasse/secrets.sh"
+[[ -r "~/bash_completion.sh" ]] && . "~/bash_completion.sh"
+[[ -r "~/secrets.sh" ]] && . "~/secrets.sh"
 
 eval "$(direnv hook bash)"
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home"
-export PATH="$HOME/.poetry/bin:$PATH"
-export PATH=/Users/dlachasse/.local/bin:$PATH
-export PYTHONPATH='/usr/local/Cellar/pdm/1.4.5/libexec/lib/python3.9/site-packages/pdm/pep582':$PYTHONPATH
-if [ -n "$PYTHONPATH" ]; then
-    export PYTHONPATH='/Users/dlachasse/.local/lib/python3.7/site-packages/pdm/pep582':$PYTHONPATH
-else
-    export PYTHONPATH='/Users/dlachasse/.local/lib/python3.7/site-packages/pdm/pep582'
-fi
+export PATH=~/.local/bin:$PATH
 for bcfile in ~/.bash_completion.d/* ; do
   [ -f "$bcfile" ] && . $bcfile
 done
