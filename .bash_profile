@@ -2,6 +2,9 @@ export AIRFLOW_HOME=~/airflow
 export GOPATH=~/Dev/go
 export EDITOR='nvim'
 
+# Bash Completion
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
 parse_git_dirty () {
   [[ $(git status 2> /dev/null | tail -n1 | cut -c 1-17) != "nothing to commit" ]] && echo "*"
 }
@@ -18,8 +21,8 @@ RESET=$(tput sgr0)
 
 PS1="\[${BOLD}${CYAN}\]DLC \[$BASE0\]in \[$BLUE\]\w\[$BASE0\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$YELLOW\]\$(parse_git_branch)\[$BASE0\]\n\$ \[$RESET\]"
 
-. /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+. $(brew --prefix asdf)/libexec/asdf.sh
+. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
 
 # git
 alias gcb='git checkout -b'
@@ -60,18 +63,11 @@ alias dba="docker build --build-arg NEXUS_PYPI_USERNAME --build-arg NEXUS_PYPI_P
 # pandoc
 alias deck="pandoc --to=revealjs -V revealjs-url=./reveal.js -V theme=white --self-contained --output=$1-$2.html --slide-level 2 weekly_template.md"
 
-# Bash Completion
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-source <(kubectl completion bash)
-source ~/.asdf/installs/rust/1.37.0/env
-
 export PATH=~/Dev/style/bin:$PATH
 export GPG_TTY=$(tty)
 
 [[ -r "~/bash_completion.sh" ]] && . "~/bash_completion.sh"
 [[ -r "~/secrets.sh" ]] && . "~/secrets.sh"
-
-eval "$(direnv hook bash)"
 
 export PATH=~/.local/bin:$PATH
 for bcfile in ~/.bash_completion.d/* ; do
