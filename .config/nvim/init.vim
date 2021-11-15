@@ -76,7 +76,7 @@ Plug 'juliosueiras/vim-terraform-completion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'ambv/black'
-Plug 'fisadev/vim-isort'
+Plug 'timothycrosley/isort'
 Plug 'mgedmin/python-imports.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'francoiscabrol/ranger.vim'
@@ -87,7 +87,7 @@ Plug 'janko-m/vim-test'
 Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 call plug#end()
-" Run :CocInstall coc-pyright to install pyright
+" Run :CocInstall coc-python to install python support
 
 set background=dark
 colorscheme solarized
