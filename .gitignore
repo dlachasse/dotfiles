@@ -116,3 +116,6 @@ Exercism/*
 .scala_history_jline3
 .scalac/
 Creative\ Cloud\ Files/
+.zsh*
+.babel.json
+.config/gh/hosts.yml
