@@ -119,3 +119,4 @@ Creative\ Cloud\ Files/
 .zsh*
 .babel.json
 .config/gh/hosts.yml
+.config/gcloud/**/*

@@ -71,6 +71,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'dense-analysis/ale'
 Plug 'altercation/vim-colors-solarized'
+Plug 'hashivim/vim-terraform'
 Plug 'juliosueiras/vim-terraform-completion'
 "" Python specific
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -86,6 +87,8 @@ Plug 'aklt/plantuml-syntax'
 Plug 'janko-m/vim-test'
 Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
+Plug 'mitsuhiko/jinja2'
+Plug 'yaegassy/coc-sqlfluff', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 " Run :CocInstall coc-python to install python support
 
@@ -95,7 +98,7 @@ colorscheme solarized
 " Ale defaults
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'yaml': ['prettier'],
+\   'yaml': ['yamlfix'],
 \ }
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_text_changed = 'never'

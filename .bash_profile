@@ -4,6 +4,7 @@ export EDITOR='nvim'
 
 # Bash Completion
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 
 parse_git_dirty () {
   [[ $(git status 2> /dev/null | tail -n1 | cut -c 1-17) != "nothing to commit" ]] && echo "*"
@@ -35,9 +36,6 @@ alias gsha='git rev-parse --short HEAD'
 # https://medium.com/toutsbrasil/how-to-manage-your-dotfiles-with-git-f7aeed8adf8b
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-# pepstaging
-alias pstg="cd ~/Dev/ops-core/terraform/environments/staging"
-
 # vim
 alias vimrc="vim ~/.config/nvim/init.vim"
 alias vim="nvim"
@@ -57,9 +55,6 @@ alias ec2="sh ~/bin/ec2"
 # tmux
 alias tn="tmux new-session -s ${PWD##*/}"
 
-# docker
-alias dba="docker build --build-arg NEXUS_PYPI_USERNAME --build-arg NEXUS_PYPI_PASSWORD . -t pepsico-ecom/airflow:dev"
-
 # pandoc
 alias deck="pandoc --to=revealjs -V revealjs-url=./reveal.js -V theme=white --self-contained --output=$1-$2.html --slide-level 2 weekly_template.md"
 
@@ -74,3 +69,21 @@ for bcfile in ~/.bash_completion.d/* ; do
   [ -f "$bcfile" ] && . $bcfile
 done
 . /usr/local/opt/asdf/libexec/asdf.sh
+eval "$(gh completion -s bash)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/davidlachasse/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/davidlachasse/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/davidlachasse/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/davidlachasse/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+
+
+###### PDM
+export PYTHONPATH='/Users/davidlachasse/.asdf/shims/python'
+export PYTHONPATH='/usr/local/Cellar/pdm/1.10.3/libexec/lib/python3.10/site-packages/pdm/pep582':$PYTHONPATH
+######
+
+export PATH="~/.asdf/installs/poetry/1.2.2/bin:$PATH"
+###### Enable direnv
+eval "$(direnv hook bash)"
+export PATH="$HOME/go/bin:$PATH"
